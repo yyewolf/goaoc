@@ -6,9 +6,18 @@
 
 To setup this template you only need `Go` !
 
-You can follow the quick tour by typing :
+To begin, you only need to type the following :
 
 ```
-$ go run template/cmd/setup/*
+$ ./setup.sh
 ```
 
+# 🎄🎄 Customization
+
+You can customize your AoC as you wish !
+
+Here's a list of interesting files to modify: 
+
+- `README.template.md`
+- `template/markdown/*`
+- `template/go/*`

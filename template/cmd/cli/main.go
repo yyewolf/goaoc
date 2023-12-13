@@ -2,12 +2,21 @@ package main
 
 import (
 	"aocli/template/internal/cli"
-	"aocli/template/internal/markdown"
-	"fmt"
+	"aocli/template/internal/folder"
+	"os"
 )
 
-func main() {
+var root = folder.FindRoot()
 
-	fmt.Println(markdown.GenerateStars("2023"))
+func init() {
+	// Change working directory to root
+	err := os.Chdir(root)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func main() {
+	// folder.CreateDay("2023", "01")
 	cli.Execute()
 }
