@@ -40,5 +40,5 @@ func saveConfig() {
 		panic(err)
 	}
 
-	folder.CreateDay(config.C.Public.CurrentYear, "01")
+	folder.CreateDay(config.C.Public.CurrentYear, 1)
 }

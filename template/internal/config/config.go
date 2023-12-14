@@ -1,13 +1,16 @@
 package config
 
 import (
+	"aocli/template/internal/folder"
+	"path"
+
 	"github.com/caarlos0/env/v9"
 	"github.com/joho/godotenv"
 )
 
-const (
-	ConfigPath  = "template/.config"
-	SecretsPath = "template/.config.secrets"
+var (
+	ConfigPath  = path.Join(folder.FindRoot(), "/template/.config")
+	SecretsPath = path.Join(folder.FindRoot(), "/template/.config.secrets")
 )
 
 type Config struct {
@@ -17,6 +20,7 @@ type Config struct {
 
 	Public struct {
 		CurrentYear string `env:"YEAR"`
+		BenchFlags  string `env:"BENCH_FLAGS"`
 	} `envPrefix:"AOC_"`
 }
 

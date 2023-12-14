@@ -12,7 +12,7 @@ var (
 )
 
 func getSingleStars() {
-	stars, err := aoc.GetStars(year, day)
+	stars, err := aoc.GetStars(year, fmt.Sprintf("%d", day))
 	if err != nil {
 		fmt.Println("🚨 An error occured:", err)
 	}
@@ -28,10 +28,10 @@ func getSingleStars() {
 		fmt.Println("🎄 No stars for day", day, "of year", year, ":(")
 	case 1:
 		// one star emoji
-		fmt.Printf("🎄 You have : 🌟 (%s/%s)\n", year, day)
+		fmt.Printf("🎄 You have : 🌟 (%s/%d)\n", year, day)
 	case 2:
 		// two star emoji
-		fmt.Printf("🎄 You have : 🌟🌟 (%s/%s)\n", year, day)
+		fmt.Printf("🎄 You have : 🌟🌟 (%s/%d)\n", year, day)
 	}
 }
 
@@ -60,10 +60,10 @@ func getAllStars() {
 
 }
 
-var cmdS = &cobra.Command{
+var cmdStars = &cobra.Command{
 	Use:     "stars",
-	Aliases: []string{"s"},
-	Short:   "Get stars, defaults to today (short: s)",
+	Aliases: []string{"S"},
+	Short:   "Get stars, defaults to today (short: S)",
 	Run: func(cmd *cobra.Command, args []string) {
 		if !allStars {
 			getSingleStars()
@@ -74,15 +74,15 @@ var cmdS = &cobra.Command{
 }
 
 func init() {
-	defaultYear := aoc.CurrentYear()
-	defaultDay := aoc.CurrentDay()
+	defaultYear := aoc.DefaultYear()
+	defaultDay := aoc.DefaultDay()
 
-	cmdS.Flags().StringVarP(&year, "year", "y", defaultYear, "Specify the year for Advent of Code")
-	cmdS.Flags().StringVarP(&day, "day", "d", defaultDay, "Specify the day for Advent of Code")
+	cmdStars.Flags().StringVarP(&year, "year", "y", defaultYear, "Specify the year for Advent of Code")
+	cmdStars.Flags().IntVarP(&day, "day", "d", defaultDay, "Specify the day for Advent of Code")
 
-	cmdS.Flags().BoolVarP(&auto, "auto", "a", false, "Output for use in scripts")
+	cmdStars.Flags().BoolVarP(&auto, "auto", "a", false, "Output for use in scripts")
 
-	cmdS.Flags().BoolVarP(&allStars, "all", "A", false, "Get all stars for the current year")
+	cmdStars.Flags().BoolVarP(&allStars, "all", "A", false, "Get all stars for the current year")
 
-	rootCmd.AddCommand(cmdS)
+	rootCmd.AddCommand(cmdStars)
 }

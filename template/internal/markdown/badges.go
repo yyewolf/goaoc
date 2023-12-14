@@ -3,7 +3,6 @@ package markdown
 import (
 	"aocli/template/internal/aoc"
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/go-git/go-git/v5"
@@ -18,10 +17,9 @@ var (
 
 func GenerateBadges(year string) (res string) {
 	// Get current day
-	day := aoc.CurrentDay()
+	day := aoc.DefaultDay()
 
-	d, _ := strconv.Atoi(day)
-	if d < 25 {
+	if day < 25 {
 		currentDayBadge := fmt.Sprintf(formatBadgeCurrentDay, day)
 
 		res = currentDayBadge

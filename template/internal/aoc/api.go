@@ -98,6 +98,8 @@ func GetChallenge(year, day string, part int) (string, error) {
 		if j == -1 {
 			j = strings.Index(string(sanitized), "Your puzzle answer was")
 		}
+
+		// fmt.Println(sanitized)
 		sanitized = sanitized[:j-2]
 
 		return sanitized, nil
@@ -109,7 +111,7 @@ func GetChallenge(year, day string, part int) (string, error) {
 
 		sanitized = sanitized[i+16:]
 
-		j := strings.Index(string(sanitized), "To begin, get your puzzle input")
+		j := strings.Index(string(sanitized), "Although it hasn't changed")
 		if j == -1 {
 			j = strings.Index(string(sanitized), "Your puzzle answer was")
 		}
@@ -162,15 +164,13 @@ func GetStars(year, day string) (int, error) {
 		return 0, err
 	}
 
-	// Search for calendar-day%d
-	i := strings.Index(string(data), fmt.Sprintf("calendar-day%s ", day))
-	if i == -1 {
-		return 0, fmt.Errorf("day not found")
+	// Search for "Day 14, two stars"
+	if strings.Contains(string(data), "Day "+day+", two stars") {
+		return 2, nil
 	}
 
-	if strings.HasPrefix(string(data)[i:], fmt.Sprintf("calendar-day%s calendar-verycomplete", day)) {
-		return 2, nil
-	} else if strings.HasPrefix(string(data)[i:], fmt.Sprintf("calendar-day%s calendar-complete", day)) {
+	// Search for "Day 14, one star"
+	if strings.Contains(string(data), "Day "+day+", one star") {
 		return 1, nil
 	}
 
@@ -198,16 +198,10 @@ func GetAllStars(year string) (stars []int, err error) {
 	}
 
 	for day := 1; day <= 25; day++ {
-
-		// Search for calendar-day%d
-		i := strings.Index(string(data), fmt.Sprintf("calendar-day%d ", day))
-		if i == -1 {
-			continue
-		}
-
-		if strings.HasPrefix(string(data[i:]), fmt.Sprintf("calendar-day%d calendar-verycomplete", day)) {
+		// Search for "Day 14, two stars"
+		if strings.Contains(string(data), "Day "+fmt.Sprintf("%d", day)+", two stars") {
 			stars = append(stars, 2)
-		} else if strings.HasPrefix(string(data[i:]), fmt.Sprintf("calendar-day%d calendar-complete", day)) {
+		} else if strings.Contains(string(data), "Day "+fmt.Sprintf("%d", day)+", one star") {
 			stars = append(stars, 1)
 		} else {
 			stars = append(stars, 0)
@@ -215,4 +209,29 @@ func GetAllStars(year string) (stars []int, err error) {
 	}
 
 	return
+}
+
+func Submit(year string, day int, part int, answer string) (bool, error) {
+	c := config.C
+
+	bdy := strings.NewReader("level=" + fmt.Sprintf("%d", part) + "&answer=" + answer)
+	r, err := http.NewRequest("POST", "https://adventofcode.com/"+year+"/day/"+fmt.Sprintf("%d", day)+"/answer", bdy)
+	if err != nil {
+		return false, err
+	}
+	r.AddCookie(&http.Cookie{Name: "session", Value: c.Secrets.AocSession})
+	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+	resp, err := http.DefaultClient.Do(r)
+	if err != nil {
+		return false, err
+	}
+	defer resp.Body.Close()
+
+	data, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return false, err
+	}
+
+	return strings.Contains(string(data), "That's the right answer"), nil
 }

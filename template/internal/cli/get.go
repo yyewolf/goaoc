@@ -9,7 +9,7 @@ import (
 
 var (
 	year string
-	day  string
+	day  int
 	part int
 
 	input bool
@@ -23,7 +23,7 @@ var cmdG = &cobra.Command{
 	Short:   "Get a challenge, defaults to today (short: g)",
 	Run: func(cmd *cobra.Command, args []string) {
 		if input {
-			in, err := aoc.GetInput(year, day)
+			in, err := aoc.GetInput(year, fmt.Sprintf("%d", day))
 			if err != nil {
 				fmt.Println("🚨 An error occured:", err)
 			}
@@ -32,9 +32,10 @@ var cmdG = &cobra.Command{
 			return
 		}
 
-		chall, err := aoc.GetChallenge(year, day, part)
+		chall, err := aoc.GetChallenge(year, fmt.Sprintf("%d", day), part)
 		if err != nil {
 			fmt.Println("🚨 An error occured:", err)
+			return
 		}
 
 		if auto {
@@ -49,11 +50,11 @@ var cmdG = &cobra.Command{
 }
 
 func init() {
-	defaultYear := aoc.CurrentYear()
-	defaultDay := aoc.CurrentDay()
+	defaultYear := aoc.DefaultYear()
+	defaultDay := aoc.DefaultDay()
 
 	cmdG.Flags().StringVarP(&year, "year", "y", defaultYear, "Specify the year for Advent of Code")
-	cmdG.Flags().StringVarP(&day, "day", "d", defaultDay, "Specify the day for Advent of Code")
+	cmdG.Flags().IntVarP(&day, "day", "d", defaultDay, "Specify the day for Advent of Code")
 	cmdG.Flags().IntVarP(&part, "part", "p", 1, "Specify the part for Advent of Code")
 
 	cmdG.Flags().BoolVarP(&auto, "auto", "a", false, "Output for use in scripts")

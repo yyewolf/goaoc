@@ -27,7 +27,7 @@ func init() {
 	}
 
 	// Get column count
-	starsColumnCount, err = strconv.Atoi(starsMd[i+13 : i+14])
+	starsColumnCount, _ = strconv.Atoi(starsMd[i+13 : i+14])
 
 	// Fill starsMd with what's in between {{START}} and {{END}}
 	// If not found, panic

@@ -18,5 +18,7 @@ func init() {
 
 func main() {
 	// folder.CreateDay("2023", "01")
+	// fmt.Println(folder.GetYearFolder())
+
 	cli.Execute()
 }

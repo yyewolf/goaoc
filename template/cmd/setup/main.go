@@ -100,7 +100,7 @@ func setupCheckIfRunBefore() {
 }
 
 func setupAskForYear() {
-	var year = aoc.CurrentYear()
+	var year = aoc.DefaultYear()
 
 	// Ask user for year with emojis
 	fmt.Printf("📅 Please enter the year you want to setup for (%s) : ", year)

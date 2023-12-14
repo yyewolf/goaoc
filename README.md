@@ -21,3 +21,7 @@ Here's a list of interesting files to modify:
 - `README.template.md`
 - `template/markdown/*`
 - `template/go/*`
+
+# Special thanks
+
+- The benches are displayed thanks to a modified version of the now archived [prettybench](https://github.com/cespare/prettybench) from @cespare.
