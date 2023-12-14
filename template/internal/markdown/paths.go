@@ -1,5 +1,7 @@
 package markdown
 
 var (
-	starsTemplate = "template/markdown/stars.md"
+	mainTemplate    = "README.template.md"
+	starsTemplate   = "template/markdown/stars.md"
+	benchesTemplate = "template/markdown/benches.md"
 )

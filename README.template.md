@@ -14,7 +14,4 @@ Here you can put a simple description and anything you want really!
 
 {{.Benchmarks}}
 
-
-## Previous years
-
-{{.PreviousYears}}
+{{.OtherYears}}

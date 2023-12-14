@@ -3,6 +3,7 @@ package markdown
 import (
 	"aocli/template/internal/aoc"
 	"fmt"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -55,11 +56,11 @@ func GenerateStars(year string) string {
 		}
 	}
 
-	var lines = make([]string, 25/starsColumnCount)
+	var lines = make([]string, int(math.Ceil(25.0/float64(starsColumnCount))))
 
 	// Fill lines
 	for i, s := range stars {
-		line := i % starsColumnCount
+		line := i % int(math.Ceil(25.0/float64(starsColumnCount)))
 
 		var emoji string
 		switch s {
@@ -77,7 +78,9 @@ func GenerateStars(year string) string {
 	// Fill empty lines
 	for i, l := range lines {
 		if l == "" {
-			lines[i] = "| | "
+			for j := 0; j < benchesColumnCount; j++ {
+				lines[i] += "| | "
+			}
 		}
 	}
 

@@ -4,6 +4,7 @@ import (
 	"aocli/template/internal/aoc"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/go-git/go-git/v5"
 )
@@ -19,10 +20,12 @@ func GenerateBadges(year string) (res string) {
 	// Get current day
 	day := aoc.DefaultDay()
 
-	if day < 25 {
-		currentDayBadge := fmt.Sprintf(formatBadgeCurrentDay, day)
+	currentYear := time.Now().Year()
 
-		res = currentDayBadge
+	currentDayBadge := ""
+
+	if day < 25 && year == fmt.Sprintf("%d", currentYear) {
+		currentDayBadge = fmt.Sprintf(formatBadgeCurrentDay+"\n", day)
 	}
 
 	// Get stars
@@ -78,7 +81,7 @@ func GenerateBadges(year string) (res string) {
 		currentCommitsBadge = fmt.Sprintf(formatBadgeLatestCommit, username, repo)
 	}
 
-	res = fmt.Sprintf("%s\n%s\n%s\n%s", currentCommitsBadge, res, currentStarsBadge, daysBadge)
+	res = fmt.Sprintf("%s\n%s%s\n%s", currentCommitsBadge, currentDayBadge, currentStarsBadge, daysBadge)
 
 	// replace spaces with %20
 	res = strings.ReplaceAll(res, " ", "%20")
