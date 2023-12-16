@@ -109,7 +109,7 @@ func GenerateCompactStars(year string) string {
 		}
 	}
 
-	var res = fmt.Sprintf("| %s | ", year)
+	var res = fmt.Sprintf("| [Advent Of Code %s](/%s) | ", year, year)
 
 	// Fill lines
 	for _, s := range stars {

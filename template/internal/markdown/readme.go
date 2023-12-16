@@ -24,7 +24,7 @@ func GenerateReadme(year string) string {
 	data.Year = year
 	data.Stars = GenerateStars(year)
 	data.Benchmarks = GenerateBenches(year)
-	data.OtherYears = GenerateYearsBut(year)
+	data.OtherYears = GenerateYears()
 
 	readmeTemplate.ExecuteTemplate(&w, mainTemplate, data)
 

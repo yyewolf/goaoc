@@ -1,12 +1,11 @@
 package markdown
 
 import (
-	"fmt"
 	"os"
 	"regexp"
 )
 
-func GenerateYearsBut(year string) string {
+func GenerateYears() string {
 	// List folders that match the pattern "20[0-9][0-9]" but are not the current years
 	folders, err := os.ReadDir(".")
 	if err != nil {
@@ -16,7 +15,7 @@ func GenerateYearsBut(year string) string {
 	re := regexp.MustCompile(`20[0-9][0-9]`)
 	years := []string{}
 	for _, folder := range folders {
-		if folder.IsDir() && re.MatchString(folder.Name()) && folder.Name() != year {
+		if folder.IsDir() && re.MatchString(folder.Name()) {
 			years = append(years, folder.Name())
 		}
 	}
@@ -30,7 +29,7 @@ func GenerateYearsBut(year string) string {
 	output += "### Other years\n\n"
 
 	for _, year := range years {
-		output += fmt.Sprintf("- [Advent Of Code %s](/%s)\n", year, year)
+		output += GenerateCompactStars(year)
 	}
 
 	return output
