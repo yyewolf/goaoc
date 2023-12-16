@@ -25,3 +25,4 @@ Here's a list of interesting files to modify:
 # Special thanks
 
 - The benches are displayed thanks to a modified version of the now archived [prettybench](https://github.com/cespare/prettybench) from @cespare.
+- The compact stars idea comes from [this repo](https://github.com/tselmek/advent-of-code) from @tselmek.

@@ -94,3 +94,40 @@ func GenerateStars(year string) string {
 
 	return starsMd + "\n" + res + "\n"
 }
+
+func GenerateCompactStars(year string) string {
+	// Get stars
+	stars, err := aoc.GetAllStars(year)
+	if err != nil {
+		fmt.Println("🚨 An error occured:", err)
+	}
+
+	// Fill stars if len < 25
+	if len(stars) < 25 {
+		for i := len(stars); i < 25; i++ {
+			stars = append(stars, 0)
+		}
+	}
+
+	var res = fmt.Sprintf("| %s | ", year)
+
+	// Fill lines
+	for _, s := range stars {
+		var emoji string
+		switch s {
+		case 0:
+			// emoji waiting
+			emoji = "🖤"
+		case 1:
+			emoji = "💙"
+		case 2:
+			emoji = "💛"
+		}
+
+		res += emoji + " "
+	}
+
+	res += "|\n"
+
+	return res
+}
