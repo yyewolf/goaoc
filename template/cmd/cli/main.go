@@ -3,6 +3,7 @@ package main
 import (
 	"aocli/template/internal/cli"
 	"aocli/template/internal/folder"
+	"aocli/template/internal/markdown"
 	"os"
 )
 
@@ -14,6 +15,8 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+
+	markdown.InitTemplates()
 }
 
 func main() {

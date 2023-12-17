@@ -12,7 +12,7 @@ import (
 var starsMd string
 var starsColumnCount int
 
-func init() {
+func initStars() {
 	d, err := os.ReadFile(starsTemplate)
 	if err != nil {
 		panic("🚨 stars.md template not found")
