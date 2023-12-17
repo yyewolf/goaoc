@@ -1,11 +1,15 @@
 package markdown
 
 import (
+	"html/template"
 	"strings"
-	"text/template"
 )
 
-var readmeTemplate = template.Must(template.ParseFiles(mainTemplate))
+var readmeTemplate *template.Template
+
+func initReadme() {
+	readmeTemplate = template.Must(template.ParseFiles(mainTemplate))
+}
 
 type ReadmeData struct {
 	Badges     string

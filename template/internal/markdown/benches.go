@@ -15,7 +15,7 @@ import (
 var benchesMd string
 var benchesColumnCount int
 
-func init() {
+func initBenches() {
 	d, err := os.ReadFile(benchesTemplate)
 	if err != nil {
 		panic("🚨 benches.md template not found")

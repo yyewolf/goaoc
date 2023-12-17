@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"os/exec"
 	"regexp"
 	"strings"
 	"syscall"
@@ -76,6 +77,9 @@ func main() {
 	// Ask if they want to build and install the CLI
 	setupAskForBuildAndInstall()
 
+	// Ask if they want to install the github workflow
+	setupAskForGithubWorkflow()
+
 	fmt.Println("🔧 Saving config...")
 	// Save config
 	saveSecrets()
@@ -116,4 +120,38 @@ func setupAskForYear() {
 	} else {
 		config.C.Public.CurrentYear = year
 	}
+}
+
+func setupAskForGithubWorkflow() {
+
+	// Ask user for year with emojis
+	fmt.Printf("📅 Would you like to install the github workflow? (Y/n) : ")
+	var install string
+	fmt.Scanln(&install)
+
+	// Check that it's a valid year (2015-now)
+	// If it's not, ask again
+	// If it is, continue
+	install = strings.ToLower(install)
+	if install == "n" {
+		return
+	}
+
+	// Copy template/.github/workflows/*.yml to .github/workflows/*.yml
+	fmt.Println("🔧 Copying github workflow...")
+	err := os.MkdirAll(".github/workflows", 0755)
+	if err != nil {
+		panic(err)
+	}
+
+	// Run cmd
+	cmd := exec.Command("cp", "-r", "./template/.github", "./")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Run()
+
+	// Tell user to put what's in template/.config.secrets and template/.config in Github Secrets at :
+	// https://github.com/username/repo/settings/secrets/actions
+	fmt.Println("🔧 Please put what's in template/.config.secrets and template/.config in Github Secrets at :")
+	fmt.Println("🔧 https://github.com/username/repo/settings/secrets/actions")
 }
