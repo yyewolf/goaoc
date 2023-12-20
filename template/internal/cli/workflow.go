@@ -36,13 +36,13 @@ var cmdWorkflow = &cobra.Command{
 		// Last one also goes in ./README.md
 		for _, year := range years {
 			readme := markdown.GenerateReadme(fmt.Sprintf("%d", year))
-			err := os.WriteFile(fmt.Sprintf("%d/READMETest.md", year), []byte(readme), 0644)
+			err := os.WriteFile(fmt.Sprintf("%d/README.md", year), []byte(readme), 0644)
 			if err != nil {
 				panic(err)
 			}
 
 			if year == years[len(years)-1] {
-				err := os.WriteFile("READMETest.md", []byte(readme), 0644)
+				err := os.WriteFile("README.md", []byte(readme), 0644)
 				if err != nil {
 					panic(err)
 				}
