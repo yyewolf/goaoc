@@ -16,7 +16,7 @@ func ParseGoBenchmark(input string) (*BenchOutputGroup, error) {
 
 	// Remove surrounding lines from the benchmarks
 	i := slices.IndexFunc(lines, func(s string) bool {
-		return strings.HasPrefix(s, "BenchmarkPart")
+		return strings.Contains(s, "\t")
 	})
 	lines = lines[i : i+2]
 
