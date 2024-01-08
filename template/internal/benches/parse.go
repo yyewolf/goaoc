@@ -3,6 +3,7 @@ package benches
 import (
 	"bytes"
 	"fmt"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -13,11 +14,11 @@ import (
 func ParseGoBenchmark(input string) (*BenchOutputGroup, error) {
 	lines := strings.Split(input, "\n")
 
-	// Remove the first 5 lines
-	lines = lines[4:]
-
-	// Remove the last 2 lines
-	lines = lines[:len(lines)-3]
+	// Remove surrounding lines from the benchmarks
+	i := slices.IndexFunc(lines, func(s string) bool {
+		return strings.Contains(s, "\t")
+	})
+	lines = lines[i : i+2]
 
 	currentBenchmark := &BenchOutputGroup{}
 	for _, line := range lines {
