@@ -1,4 +1,4 @@
-![GitHub last commit (main)](https://img.shields.io/github/last-commit/yyewolf/goaoc-2023/main)
+![GitHub last commit (main)](https://img.shields.io/github/last-commit/yyewolf/goaoc/main)
 
 ![Golang logo](./template/readme/logo.png)
 
